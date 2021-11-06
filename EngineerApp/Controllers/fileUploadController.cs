@@ -9,8 +9,7 @@ namespace EngineerApp.Controllers
         [HttpPost]
         [Route("api/UploadFile", Name = "UploadFile")]
         public async void UploadFile(IFormCollection Upload)
-        {
-           
+        {           
             if (Upload.Files.Count > 0)
             {
                 

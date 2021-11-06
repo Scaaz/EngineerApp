@@ -3,7 +3,12 @@
     <div class="large-12 medium-12 small-12 cell">
       <label
         >File
-        <input type="file" id="file" ref="myFiles" @change="handleFileUpload()" />
+        <input
+          type="file"
+          id="file"
+          ref="myFiles"
+          @change="handleFileUpload()"
+        />
       </label>
       <button @click="submitFile()">Submit</button>
     </div>
@@ -23,16 +28,17 @@ export default {
 
   methods: {
     handleFileUpload() {
-      console.log('start handle')
-       this.file = this.$refs.myFiles.files
-      console.log(this.file)
-      console.log('end handle')
+      console.log("start handle");
+      this.file = this.$refs.myFiles.files[0];
+      console.log(this.file);
+      console.log("end handle");
     },
 
     submitFile() {
       let formData = new FormData();
-
-      formData.append("file", this.file);
+      console.log("appending");
+      console.log(this.file);
+      formData.append("file", this.file, "uploadedFile");
 
       axios
         .post("api/UploadFile", formData, {
