@@ -1,14 +1,9 @@
-﻿using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Spreadsheet;
-using ExcelDataReader;
+﻿using ExcelDataReader;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace EngineerApp.Controllers
 {
@@ -20,8 +15,26 @@ namespace EngineerApp.Controllers
         public float ShearStress;
     }
 
-    public class fileUploadController : Controller
+    public class Data
     {
+        public string A { get; set; }
+        public string B { get; set; }
+        public string C { get; set; }
+    }
+    public class FileUploadController : Controller
+    {
+        [HttpPost]
+        [Route("api/Calculate", Name = "Calculate")]
+        public Data CalculateViscosity([FromBody]Data a)
+        {            
+            //zwraca główny wynik     
+            return a;
+        }
+
+
+
+
+
         [HttpPost]
         [Route("api/UploadFile", Name = "UploadFile")]
         public void UploadFile(IFormFile file)
