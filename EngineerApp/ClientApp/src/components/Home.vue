@@ -4,30 +4,52 @@
       <div class="row">
         <div class="col-md">
           <div class="row">
-            FirstInput
-          </div>
-          <div class="row">
-            <input type="text" id="firstInput" name="firstInput" /><br /><br />
-          </div>
-        </div>
-        <div class="col-md">
-          <div class="row">
-            SecondInput
+            measPts
           </div>
           <div class="row">
             <input
-              type="text"
-              id="secondInput"
-              name="secondInput"
+              type="number"
+              step="0.01"
+              id="meas-pts"
+              name="meas-pts"
             /><br /><br />
           </div>
         </div>
+
         <div class="col-md">
           <div class="row">
-            ThirdInput
+            gap
           </div>
           <div class="row">
-            <input type="text" id="thirdInput" name="thirdInput" /><br /><br />
+            <input type="number" step="0.01" id="gap" name="gap" /><br /><br />
+          </div>
+        </div>
+
+        <div class="col-md">
+          <div class="row">
+            shearRate
+          </div>
+          <div class="row">
+            <input
+              type="number"
+              step="0.01"
+              id="shear-rate"
+              name="shear-rate"
+            /><br /><br />
+          </div>
+        </div>
+
+        <div class="col-md">
+          <div class="row">
+            ShearStress
+          </div>
+          <div class="row">
+            <input
+              type="number"
+              step="0.01"
+              id="shear-stress"
+              name="shear-stress"
+            /><br /><br />
           </div>
         </div>
       </div>
@@ -35,6 +57,10 @@
       <div style="text-align: center" class="row">
         <div class="col-md">
           <button @click="submitInputs()">Submit</button>
+          <button @click="wynik()">wynik</button>
+        </div>
+        <div class="row">
+          <p>wynik: {{ displayedValue }}</p>
         </div>
       </div>
       <!-- <label
@@ -59,26 +85,51 @@ export default {
   data() {
     return {
       file: "",
+      displayedValue: "",
     };
   },
-
+  watch() {
+    this.getDisplayValue();
+    console.log("created");
+  },
   methods: {
-    handleFileUpload() {
-      console.log("start handle");
-      this.file = this.$refs.myFiles.files[0];
-      console.log(this.file);
-      console.log("end handle");
+    // handleFileUpload() {
+    //   console.log("start handle");
+    //   this.file = this.$refs.myFiles.files[0];
+    //   console.log(this.file);
+    //   console.log("end handle");
+    // },
+
+    getDisplayValue() {
+      axios.get("api/Get").then((response) => {
+        const val = response.data;
+        this.displayedValue = val;
+        console.log(val);
+        console.log("displayedValueSuccess");
+      });
     },
-
+    wynik() {
+      this.getDisplayValue();
+    },
     submitInputs() {
-      var first = document.getElementById("firstInput").value;
-      var second = document.getElementById("secondInput").value;
-      var third = document.getElementById("thirdInput").value;
+      //var first = document.getElementById("meas-pts").value;
+     // var second = document.getElementById("gap").value;
+      //var third = document.getElementById("shear-rate").value;
+     // var fourth = document.getElementById("shear-stress").value;
 
+     // first = parseFloat(first).toFixed(2);
+    //  second = parseFloat(second).toFixed(2);
+   //   third = parseFloat(third).toFixed(2);
+    //  fourth = parseFloat(fourth).toFixed(2);
       axios
         .post(
           "api/Calculate",
-         { a: first, b: second, c: third },
+          {
+            MeasPts: 1,
+            Gap: 2,
+            ShearRate: 3,
+            ShearStress: 7,
+          },
           {
             headers: {
               "Content-Type": "application/json",
@@ -86,32 +137,32 @@ export default {
           }
         )
         .then(function() {
-          console.log("SUCCESS!!");
+          console.log("SUCCESS");
         })
         .catch(function() {
           console.log("FAILURE!!");
         });
     },
 
-    submitFile() {
-      let formData = new FormData();
-      console.log("appending");
-      console.log(this.file);
-      formData.append("file", this.file, "uploadedFile");
+    //   submitFile() {
+    //     let formData = new FormData();
+    //     console.log("appending");
+    //     console.log(this.file);
+    //     formData.append("file", this.file, "uploadedFile");
 
-      axios
-        .post("api/UploadFile", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then(function() {
-          console.log("SUCCESS!!");
-        })
-        .catch(function() {
-          console.log("FAILURE!!");
-        });
-    },
+    //     axios
+    //       .post("api/UploadFile", formData, {
+    //         headers: {
+    //           "Content-Type": "multipart/form-data",
+    //         },
+    //       })
+    //       .then(function() {
+    //         console.log("SUCCESS!!");
+    //       })
+    //       .catch(function() {
+    //         console.log("FAILURE!!");
+    //       });
+    //   },
   },
 };
 </script>
