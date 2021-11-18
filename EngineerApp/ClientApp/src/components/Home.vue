@@ -82,6 +82,10 @@ import axios from "axios";
 
 export default {
   name: "Home",
+  first: 0,
+  second: 0,
+  third: 0,
+  fourth: 0,
   data() {
     return {
       file: "",
@@ -112,23 +116,24 @@ export default {
       this.getDisplayValue();
     },
     submitInputs() {
-      //var first = document.getElementById("meas-pts").value;
-     // var second = document.getElementById("gap").value;
-      //var third = document.getElementById("shear-rate").value;
-     // var fourth = document.getElementById("shear-stress").value;
+      var first = document.querySelector("input[name=meas-pts]").value;
+      var second = document.querySelector("input[name=meas-pts]").value;
+      var third = document.querySelector("input[name=shear-rate]").value;
+      var fourth = document.querySelector("input[name=shear-stress]").value;
+      
+      first = parseFloat(first);
+      second = parseFloat(second);
+      third = parseFloat(third);
+      fourth = parseFloat(fourth);
 
-     // first = parseFloat(first).toFixed(2);
-    //  second = parseFloat(second).toFixed(2);
-   //   third = parseFloat(third).toFixed(2);
-    //  fourth = parseFloat(fourth).toFixed(2);
       axios
         .post(
           "api/Calculate",
           {
-            MeasPts: 1,
-            Gap: 2,
-            ShearRate: 3,
-            ShearStress: 7,
+            MeasPts: first,
+            Gap: second,
+            ShearRate: third,
+            ShearStress: fourth,
           },
           {
             headers: {
