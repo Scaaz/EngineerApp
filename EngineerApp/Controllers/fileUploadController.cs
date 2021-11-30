@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using TaxiFarePrediction;
 
 namespace EngineerApp.Controllers
 {
@@ -24,6 +25,8 @@ namespace EngineerApp.Controllers
         public void CalculateViscosity([FromBody] Data data)
         {
             Value = data.Gap + data.MeasPts + data.ShearStress + data.ShearRate;
+            machineLearning ml = new machineLearning();
+            ml.MachineLearning();
         }
 
         [HttpGet]
