@@ -1,9 +1,4 @@
-﻿using ExcelDataReader;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using Microsoft.AspNetCore.Mvc;
 using TaxiFarePrediction;
 
 namespace EngineerApp.Controllers
@@ -25,7 +20,8 @@ namespace EngineerApp.Controllers
         public void CalculateViscosity([FromBody] Data data)
         {
             Value = data.Gap + data.MeasPts + data.ShearStress + data.ShearRate;
-            machineLearning ml = new machineLearning();
+            MachineLearningMain ml = new MachineLearningMain();
+            //ml.UseModel();
             ml.MachineLearning();
         }
 

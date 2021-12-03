@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TaxiFarePrediction
+﻿namespace TaxiFarePrediction
 {
     // <Snippet1>
     static class TestTrips

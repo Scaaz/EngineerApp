@@ -6,7 +6,7 @@ using Microsoft.ML;
 
 namespace TaxiFarePrediction
 {
-    class machineLearning
+    class OLD_ML
     {
         // <Snippet2>
         static readonly string _trainDataPath = Path.Combine(Environment.CurrentDirectory, "Data", "taxi-fare-train.csv");
