@@ -1,4 +1,5 @@
-﻿using Microsoft.ML.Data;
+﻿using EngineerApp.Controllers;
+using Microsoft.ML.Data;
 
 namespace EngineerApp.MachineLearning
 {
@@ -19,12 +20,24 @@ namespace EngineerApp.MachineLearning
 
         [LoadColumn(4)]
         public float NormalForce;
-    }
 
-    public class MetalViscosityPrediction
-    {
-        //Value that will be predicted
-        [ColumnName("Score")]
-        public float Viscosity;
+        public MetalViscosity(Data data)
+        {
+            Viscosity = 0;//to be predicted
+            Speed = data.Speed;
+            Torque = data.Torque;
+            Temperature = data.Temperature;
+            NormalForce = data.NormalForce;
+        }
+        public MetalViscosity()
+        {
+        }
+
+        public class MetalViscosityPrediction
+        {
+            //Value that will be predicted
+            [ColumnName("Score")]
+            public float Viscosity;
+        }
     }
 }

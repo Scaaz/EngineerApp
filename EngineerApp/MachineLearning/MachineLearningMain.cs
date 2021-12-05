@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using EngineerApp.MachineLearning;
 using Microsoft.ML;
+using static EngineerApp.MachineLearning.MetalViscosity;
 // </Snippet1>
 
 namespace TaxiFarePrediction
@@ -15,7 +16,7 @@ namespace TaxiFarePrediction
         static readonly string _modelPath = Path.Combine(Environment.CurrentDirectory, "Data", "Model.zip");
         // </Snippet2>
 
-        public void UseModel()
+        public void UseModel(MetalViscosity sample)
         {
 
             // Create MLContext
@@ -32,10 +33,10 @@ namespace TaxiFarePrediction
             // </Snippet14>
 
             // <Snippet20>
-            TestSinglePrediction(mlContext, trainedModel);
+            TestSinglePrediction(mlContext, trainedModel, sample);
         }
 
-        public void MachineLearning()
+        public float MachineLearning(MetalViscosity sample)
         {
             Console.WriteLine(Environment.CurrentDirectory);
 
@@ -52,7 +53,7 @@ namespace TaxiFarePrediction
             // </Snippet14>
 
             // <Snippet20>
-            TestSinglePrediction(mlContext, model);
+            return TestSinglePrediction(mlContext, model, sample);
             // </Snippet20>
         }
 
@@ -118,7 +119,7 @@ namespace TaxiFarePrediction
             Console.WriteLine($"*************************************************");
         }
 
-        private static void TestSinglePrediction(MLContext mlContext, ITransformer model)
+        private static float TestSinglePrediction(MLContext mlContext, ITransformer model, MetalViscosity MetalViscositySample)
         {
             //Prediction test
             // Create prediction function and make prediction.
@@ -129,14 +130,14 @@ namespace TaxiFarePrediction
             //vendor_id,rate_code,passenger_count,trip_time_in_secs,trip_distance,payment_type,fare_amount
             //VTS,1,1,1140,3.75,CRD,15.5
             // <Snippet23>
-            var MetalViscositySample = new MetalViscosity()
+          /*  var MetalViscositySample = new MetalViscosity()
             {
                 Viscosity = 0f,// predict it. actual = 0.128f
                 Speed = 57.3f,
                 Torque = 20.2f,
                 Temperature = 640,
                 NormalForce = -0.0388f
-            };
+            };*/
             // </Snippet23>
             // <Snippet24>
             var prediction = predictionFunction.Predict(MetalViscositySample);
@@ -145,6 +146,7 @@ namespace TaxiFarePrediction
             Console.WriteLine($"**********************************************************************");
             Console.WriteLine($"Predicted fare: {prediction.Viscosity:0.####}, actual fare:  0.128");
             Console.WriteLine($"**********************************************************************");
+            return prediction.Viscosity;
             // </Snippet25>
         }
     }
