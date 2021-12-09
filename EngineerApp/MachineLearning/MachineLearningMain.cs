@@ -13,10 +13,10 @@ namespace TaxiFarePrediction
         // <Snippet2>
         static readonly string _trainDataPath = Path.Combine(Environment.CurrentDirectory, "Data", "asd.csv"); //"taxi-fare-train.csv");
         static readonly string _testDataPath = Path.Combine(Environment.CurrentDirectory, "Data", "asd.csv");//"taxi-fare-test.csv");
-        static readonly string _modelPath = Path.Combine(Environment.CurrentDirectory, "Data", "Model.zip");
+        static readonly string _az92Model = Path.Combine(Environment.CurrentDirectory, "Data", "az92Model.zip");
         // </Snippet2>
 
-        public void UseModel(MetalViscosity sample)
+        public void UseModel(MetalViscosity sample, string modelPath)
         {
 
             // Create MLContext
@@ -27,7 +27,7 @@ namespace TaxiFarePrediction
 
             // Load data preparation pipeline and trained model
             //ITransformer dataPrepPipeline = mlContext.Model.Load("data_preparation_pipeline.zip", out dataPrepPipelineSchema);
-            ITransformer trainedModel = mlContext.Model.Load(_modelPath, out modelSchema);
+            ITransformer trainedModel = mlContext.Model.Load(modelPath, out modelSchema);
 
             //Evaluate(mlContext, trainedModel);
             // </Snippet14>
