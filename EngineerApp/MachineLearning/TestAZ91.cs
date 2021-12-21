@@ -9,11 +9,9 @@ namespace EngineerApp.MachineLearning
     {
         internal static readonly MetalViscosity AZ91 = new MetalViscosity
         {
-            Viscosity = 0 ,// predict it. actual = 0.128f
-            Speed = 57.3f,
-            Torque = 20.2f,
+            ShearStress = 1.28f,
+            Viscosity = 0.128f,// predict it. actual = 0.128f
             Temperature = 640,
-            NormalForce = -0.0388f
         };
     }
 }

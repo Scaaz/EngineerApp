@@ -6,28 +6,21 @@ namespace EngineerApp.MachineLearning
     public class MetalViscosity
     {
         //Data that will be loaded to model
+
         [LoadColumn(0)]
-        public float Viscosity;
+        public float ShearStress;
 
         [LoadColumn(1)]
-        public float Speed;
+        public float Viscosity;
 
         [LoadColumn(2)]
-        public float Torque;
-
-        [LoadColumn(3)]
         public float Temperature;
-
-        [LoadColumn(4)]
-        public float NormalForce;
 
         public MetalViscosity(Data data)
         {
             Viscosity = 0;//to be predicted
-            Speed = data.Speed;
-            Torque = data.Torque;
+            ShearStress = data.ShearStress;
             Temperature = data.Temperature;
-            NormalForce = data.NormalForce;
         }
         public MetalViscosity()
         {

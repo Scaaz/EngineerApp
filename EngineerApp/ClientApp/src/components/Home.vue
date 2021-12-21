@@ -4,16 +4,20 @@
             <div class="row">
                 <div class="col-md">
                     <div class="row">
-                       Wybierz stop
+                        Stop:
                     </div>
                     <div class="row">
-                       lalalaa wybor
+                        <div>
+                            <select v-model="selectedPerson">
+                                <option v-for="person in people" :key="person.key">{{person.name}}</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-                            
+
                 <div class="col-md">
                     <div class="row">
-                        Temperature
+                        Temperatura:
                     </div>
                     <div class="row">
                         <input type="number"
@@ -25,7 +29,7 @@
 
                 <div class="col-md">
                     <div class="row">
-                        Shear stress
+                        <span>Naprężenie ścinające:</span>
                     </div>
                     <div class="row">
                         <input type="number"
@@ -39,12 +43,12 @@
             <div style="text-align: center">
                 <div class="row">
                     <div class="col-md">
-                        <button @click="submitInputs()">Submit</button>
+                        <button @click="submitInputs()">Oblicz</button>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md">
-                        <p>wynik: {{ displayedValue }}</p>
+                        <p>Lepkość dynamiczna: {{ displayedValue }}</p>
                     </div>
                 </div>
             </div>
@@ -65,6 +69,12 @@
             return {
                 file: "",
                 displayedValue: "",
+                people: [
+                    { key: 1, name: "AZ91" },
+                    { key: 2, name: "E21" },
+                    { key: 3, name: "WE43B" },
+                ],
+                selectedPerson: "AZ91",
             };
         },
         watch() {

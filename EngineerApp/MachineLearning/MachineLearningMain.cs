@@ -11,9 +11,9 @@ namespace TaxiFarePrediction
     class MachineLearningMain
     {
         // <Snippet2>
-        static readonly string _trainDataPath = Path.Combine(Environment.CurrentDirectory, "Data", "asd.csv"); //"taxi-fare-train.csv");
-        static readonly string _testDataPath = Path.Combine(Environment.CurrentDirectory, "Data", "asd.csv");//"taxi-fare-test.csv");
-        static readonly string _az92Model = Path.Combine(Environment.CurrentDirectory, "Data", "az92Model.zip");
+        static readonly string _trainDataPath = Path.Combine(Environment.CurrentDirectory, "Data", "AZ91.csv"); 
+        static readonly string _testDataPath = Path.Combine(Environment.CurrentDirectory, "Data", "AZ91.csv");
+        static readonly string _az91Model = Path.Combine(Environment.CurrentDirectory, "Data", "az91Model.zip");
         // </Snippet2>
 
         public void UseModel(MetalViscosity sample, string modelPath)
@@ -60,20 +60,18 @@ namespace TaxiFarePrediction
         public static ITransformer Train(MLContext mlContext, string dataPath)
         {
             // <Snippet6>
-            IDataView dataView = mlContext.Data.LoadFromTextFile<MetalViscosity>(dataPath, hasHeader: true, separatorChar: ',');
+            IDataView dataView = mlContext.Data.LoadFromTextFile<MetalViscosity>(dataPath, hasHeader: false, separatorChar: ';');
             // </Snippet6>
 
             // <Snippet7>
             var pipeline = mlContext.Transforms.CopyColumns(outputColumnName: "Label", inputColumnName: "Viscosity")
                     // </Snippet7>
                     // <Snippet8>
-                    .Append(mlContext.Transforms.Categorical.OneHotEncoding(outputColumnName: "SpeedEncoded", inputColumnName: "Speed"))
-                    .Append(mlContext.Transforms.Categorical.OneHotEncoding(outputColumnName: "TorqueEncoded", inputColumnName: "Torque"))
                     .Append(mlContext.Transforms.Categorical.OneHotEncoding(outputColumnName: "TemperatureEncoded", inputColumnName: "Temperature"))
-                    .Append(mlContext.Transforms.Categorical.OneHotEncoding(outputColumnName: "NormalForceEncoded", inputColumnName: "NormalForce"))
+                    .Append(mlContext.Transforms.Categorical.OneHotEncoding(outputColumnName: "ShearStressEncoded", inputColumnName: "ShearStress"))
                     // </Snippet8>
                     // <Snippet9>
-                    .Append(mlContext.Transforms.Concatenate("Features", "SpeedEncoded", "TorqueEncoded", "TemperatureEncoded", "NormalForceEncoded"))
+                    .Append(mlContext.Transforms.Concatenate("Features", "TemperatureEncoded", "ShearStressEncoded"))
                     // </Snippet9>
                     // <Snippet10>
                     .Append(mlContext.Regression.Trainers.FastTree());
@@ -87,7 +85,7 @@ namespace TaxiFarePrediction
 
             Console.WriteLine("=============== End of training ===============");
             Console.WriteLine();
-            mlContext.Model.Save(model, dataView.Schema, "Data/model2.zip"); // SAVE MODEL
+            mlContext.Model.Save(model, dataView.Schema, "Data/AZ91model.zip"); // SAVE MODEL
             // <Snippet12>
             return model;
             // </Snippet12>
@@ -96,7 +94,7 @@ namespace TaxiFarePrediction
         private static void Evaluate(MLContext mlContext, ITransformer model)
         {
             // <Snippet15>
-            IDataView dataView = mlContext.Data.LoadFromTextFile<MetalViscosity>(_testDataPath, hasHeader: true, separatorChar: ',');
+            IDataView dataView = mlContext.Data.LoadFromTextFile<MetalViscosity>(_testDataPath, hasHeader: false, separatorChar: ';');
             // </Snippet15>
 
             // <Snippet16>
@@ -136,7 +134,7 @@ namespace TaxiFarePrediction
                 Speed = 57.3f,
                 Torque = 20.2f,
                 Temperature = 640,
-                NormalForce = -0.0388f
+                ShearStress = -0.0388f
             };*/
             // </Snippet23>
             // <Snippet24>
@@ -144,7 +142,8 @@ namespace TaxiFarePrediction
             // </Snippet24>
             // <Snippet25>
             Console.WriteLine($"**********************************************************************");
-            Console.WriteLine($"Predicted fare: {prediction.Viscosity:0.####}, actual fare:  0.128");
+            Console.WriteLine($"Input temperature = {MetalViscositySample.Temperature}, Input shearStress = {MetalViscositySample.ShearStress}, Input Viscosity = {MetalViscositySample.Viscosity}");
+            Console.WriteLine($"Predicted Viscosity: {prediction.Viscosity}, actual Viscosity:  0,128");
             Console.WriteLine($"**********************************************************************");
             return prediction.Viscosity;
             // </Snippet25>
