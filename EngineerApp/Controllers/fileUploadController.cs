@@ -6,10 +6,8 @@ namespace EngineerApp.Controllers
 {
     public class Data
     {
-        public float Speed { get; set; }
-        public float Torque { get; set; }
         public float Temperature { get; set; }
-        public float NormalForce { get; set; }
+        public float ShearStress { get; set; }
     }
 
     public class FileUploadController : Controller
@@ -20,10 +18,10 @@ namespace EngineerApp.Controllers
         [Route("api/Calculate", Name = "Calculate")]
         public void CalculateViscosity([FromBody] Data data)
         {
-            //Value = data.Gap + data.MeasPts + data.ShearStress + data.ShearRate;
-            MachineLearningMain ml = new MachineLearningMain();
-            //ml.UseModel();
+            MachineLearningMain ml = new MachineLearningMain();           
             MetalViscosity sample = new MetalViscosity(data);
+            string whichModel = "asd";
+            //ml.UseModel(sample, whichModel);
             Value = ml.MachineLearning(sample);
         }
 

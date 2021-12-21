@@ -4,25 +4,13 @@
             <div class="row">
                 <div class="col-md">
                     <div class="row">
-                        Speed
+                       Wybierz stop
                     </div>
                     <div class="row">
-                        <input type="number"
-                               step="0.01"
-                               id="Speed"
-                               name="Speed" /><br /><br />
+                       lalalaa wybor
                     </div>
                 </div>
-
-                <div class="col-md">
-                    <div class="row">
-                        Torque
-                    </div>
-                    <div class="row">
-                        <input type="number" step="0.01" id="Torque" name="Torque" /><br /><br />
-                    </div>
-                </div>
-
+                            
                 <div class="col-md">
                     <div class="row">
                         Temperature
@@ -37,13 +25,13 @@
 
                 <div class="col-md">
                     <div class="row">
-                        NormalForce
+                        Shear stress
                     </div>
                     <div class="row">
                         <input type="number"
                                step="0.01"
-                               id="NormalForce"
-                               name="NormalForce" /><br /><br />
+                               id="ShearStress"
+                               name="ShearStress" /><br /><br />
                     </div>
                 </div>
             </div>
@@ -85,13 +73,9 @@
         },
         methods: {
             submitInputs() {
-                var first = document.querySelector("input[name=Speed]").value;
-                var second = document.querySelector("input[name=Torque]").value;
                 var third = document.querySelector("input[name=Temperature]").value;
-                var fourth = document.querySelector("input[name=NormalForce]").value;
+                var fourth = document.querySelector("input[name=ShearStress]").value;
 
-                first = parseFloat(first);
-                second = parseFloat(second);
                 third = parseFloat(third);
                 fourth = parseFloat(fourth);
 
@@ -99,10 +83,8 @@
                     .post(
                         "api/Calculate",
                         {
-                            Speed: first,
-                            Torque: second,
                             Temperature: third,
-                            NormalForce: fourth,
+                            ShearStress: fourth,
                         },
                         {
                             headers: {
