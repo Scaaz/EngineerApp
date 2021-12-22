@@ -63,8 +63,8 @@
         name: "Home",
         first: 0,
         second: 0,
-        third: 0,
-        fourth: 0,
+        temperatureValue: 0,
+        shearStressValue: 0,
         data() {
             return {
                 file: "",
@@ -83,18 +83,20 @@
         },
         methods: {
             submitInputs() {
-                var third = document.querySelector("input[name=Temperature]").value;
-                var fourth = document.querySelector("input[name=ShearStress]").value;
+                var temperatureValue = document.querySelector("input[name=Temperature]").value;
+                var shearStressValue = document.querySelector("input[name=ShearStress]").value;
+                var selectedModelValue = this.selectedPerson;
 
-                third = parseFloat(third);
-                fourth = parseFloat(fourth);
+                temperatureValue = parseFloat(temperatureValue);
+                shearStressValue = parseFloat(shearStressValue);
 
                 axios
                     .post(
                         "api/Calculate",
                         {
-                            Temperature: third,
-                            ShearStress: fourth,
+                            Temperature: temperatureValue,
+                            ShearStress: shearStressValue,
+                            WhichModel: selectedModelValue,
                         },
                         {
                             headers: {
