@@ -4,10 +4,12 @@
             <div class="row">
                 <div class="col-md">
                     <div class="row">
-                        Stop:
+                        <div class="col-md">
+                            Stop:
+                        </div>
                     </div>
                     <div class="row">
-                        <div>
+                        <div class="col-md">
                             <select v-model="selectedPerson" style="width: 203px; height: 48px">
                                 <option v-for="person in people" :key="person.key">{{person.name}}</option>
                             </select>
@@ -17,25 +19,35 @@
 
                 <div class="col-md">
                     <div class="row">
-                        Temperatura:
+                        <div class="col-md">
+                            Temperatura:
+                        </div>
                     </div>
                     <div class="row">
-                        <input type="number"
-                               step="0.01"
-                               id="Temperature"
-                               name="Temperature" /><br /><br />
+                        <div class="col-md">
+                            <input style="height:48px"
+                                   type="number"
+                                   step="0.01"
+                                   id="Temperature"
+                                   name="Temperature" /><br /><br />
+                        </div>
                     </div>
                 </div>
 
                 <div class="col-md">
                     <div class="row">
-                        <span>Naprężenie ścinające:</span>
+                        <div class="col-md">
+                            <span>Naprężenie ścinające:</span>
+                        </div>
                     </div>
                     <div class="row">
-                        <input type="number"
-                               step="0.01"
-                               id="ShearStress"
-                               name="ShearStress" /><br /><br />
+                        <div class="col-md">
+                            <input style="height:48px"
+                                   type="number"
+                                   step="0.01"
+                                   id="ShearStress"
+                                   name="ShearStress" /><br /><br />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -108,7 +120,7 @@
 
                         axios.get("api/Get").then((response) => {
                             const val = response.data;
-                            this.displayedValue = "Przewidywana lepkość dynamiczna: "+ val;
+                            this.displayedValue = "Przewidywana lepkość dynamiczna: " + val;
                             console.log(val);
                             console.log("displayedValueSuccess");
                         })

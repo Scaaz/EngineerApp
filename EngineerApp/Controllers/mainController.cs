@@ -33,7 +33,7 @@ namespace EngineerApp.Controllers
                     PredictedViscosity = ml.UseModel(sample, _AZ91Model);
                     break;
                 case "E21":
-                    PredictedViscosity = ml.UseModel(sample, _E21Model);
+                   PredictedViscosity = ml.UseModel(sample, _E21Model);
                     break;
                 case "WE43B":
                     PredictedViscosity = ml.UseModel(sample, _WE43BModel);
