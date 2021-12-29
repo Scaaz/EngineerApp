@@ -8,7 +8,7 @@
                     </div>
                     <div class="row">
                         <div>
-                            <select v-model="selectedPerson">
+                            <select v-model="selectedPerson" style="width: 203px; height: 48px">
                                 <option v-for="person in people" :key="person.key">{{person.name}}</option>
                             </select>
                         </div>
@@ -39,6 +39,9 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <br>
+            </div>
 
             <div style="text-align: center">
                 <div class="row">
@@ -48,7 +51,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md">
-                        <p>Lepkość dynamiczna: {{ displayedValue }}</p>
+                        <p>{{ displayedValue }}</p>
                     </div>
                 </div>
             </div>
@@ -76,10 +79,6 @@
                 ],
                 selectedPerson: "AZ91",
             };
-        },
-        watch() {
-            this.getDisplayValue();
-            console.log("created");
         },
         methods: {
             submitInputs() {
@@ -109,7 +108,7 @@
 
                         axios.get("api/Get").then((response) => {
                             const val = response.data;
-                            this.displayedValue = val;
+                            this.displayedValue = "Przewidywana lepkość dynamiczna: "+ val;
                             console.log(val);
                             console.log("displayedValueSuccess");
                         })

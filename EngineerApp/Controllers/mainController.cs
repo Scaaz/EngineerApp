@@ -15,7 +15,7 @@ namespace EngineerApp.Controllers
 
     public class MainController : Controller
     {
-        public static float Value { get; set; }
+        public static float PredictedViscosity { get; set; }
         static readonly string _AZ91Model = Path.Combine(Environment.CurrentDirectory, "Data", "AZ91Model.zip");
         static readonly string _E21Model = Path.Combine(Environment.CurrentDirectory, "Data", "E21Model.zip");
         static readonly string _WE43BModel = Path.Combine(Environment.CurrentDirectory, "Data", "WE43BModel.zip");
@@ -30,25 +30,24 @@ namespace EngineerApp.Controllers
             switch(data.WhichModel)
             {
                 case "AZ91":
-                    ml.UseModel(sample, _AZ91Model);
+                    PredictedViscosity = ml.UseModel(sample, _AZ91Model);
                     break;
                 case "E21":
-                    ml.UseModel(sample, _E21Model);
+                    PredictedViscosity = ml.UseModel(sample, _E21Model);
                     break;
                 case "WE43B":
-                    ml.UseModel(sample, _WE43BModel);
+                    PredictedViscosity = ml.UseModel(sample, _WE43BModel);
                     break;
-            }          
+            }
 
-            Value = ml.MachineLearning(sample);
+           //PredictedViscosity = ml.MachineLearning(sample); //DO TRENOWANIA NOWYCH MODELI
         }
 
         [HttpGet]
         [Route("api/Get", Name = "GetResult")]
         public float GetResultValue()
         {
-            //wyświetlam Value
-            return Value;
+            return PredictedViscosity;
         }
     }
 }

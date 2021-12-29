@@ -10,9 +10,9 @@ namespace TaxiFarePrediction
 {
     class MachineLearningMain
     {
-        static readonly string _trainDataPath = Path.Combine(Environment.CurrentDirectory, "Data", "AZ91.csv");
+        static readonly string _trainDataPath = Path.Combine(Environment.CurrentDirectory, "Data", "WE43B.csv");
 
-        public void UseModel(MetalViscosity sample, string modelPath)
+        public float UseModel(MetalViscosity sample, string modelPath)
         {
             // Create MLContext
             MLContext mlContext = new MLContext();
@@ -26,7 +26,7 @@ namespace TaxiFarePrediction
 
             //Evaluate(mlContext, trainedModel);
 
-            TestSinglePrediction(mlContext, loadedModel, sample);
+            return TestSinglePrediction(mlContext, loadedModel, sample);
         }
 
         public float MachineLearning(MetalViscosity sample)
@@ -51,7 +51,7 @@ namespace TaxiFarePrediction
             var model = pipeline.Fit(dataView);
             Console.WriteLine("=============== End of training ===============");
             Console.WriteLine();
-            mlContext.Model.Save(model, dataView.Schema, "Data/AZ91model.zip"); // SAVE MODEL
+            mlContext.Model.Save(model, dataView.Schema, "Data/WE43Bmodel.zip"); // SAVE MODEL
             return model;
         }
 

@@ -2,7 +2,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand">Vue JS Template for .NET 5</a>
+                <a class="navbar-brand">Obliczanie gęstości metalu</a>
                 <button class="navbar-toggler"
                         type="button"
                         data-toggle="collapse"
@@ -20,9 +20,6 @@
                         </li>
                         <li class="nav-item">
                             <router-link :to="{ name: 'Counter' }" class="nav-link text-dark">Counter</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link :to="{ name: 'FetchData' }" class="nav-link text-dark">Fetch Data</router-link>
                         </li>
                     </ul>
                 </div>
