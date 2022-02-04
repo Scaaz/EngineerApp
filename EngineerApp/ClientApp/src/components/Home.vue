@@ -117,18 +117,15 @@
                     )
                     .then(response => {
                         console.log(response);
-
                         axios.get("api/Get").then((response) => {
                             const val = response.data;
                             this.displayedValue = "Przewidywana lepkość dynamiczna: " + val;
-                            console.log(val);
-                            console.log("displayedValueSuccess");
                         })
                     })
                     .catch(function () {
                         console.log("FAILURE!!");
                     });
-            },
+                },
         }
     };
 </script>
