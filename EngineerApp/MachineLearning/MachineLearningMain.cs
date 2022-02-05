@@ -26,17 +26,26 @@ namespace TaxiFarePrediction
 
             //Evaluate(mlContext, trainedModel);
 
-            return TestSinglePrediction(mlContext, loadedModel, sample);
+            return SinglePrediction(mlContext, loadedModel, sample);
         }
 
-        public float MachineLearning(MetalViscosity sample)
+        public float MachineLearning(MetalViscosity sample, string whichModel)
         {
             Console.WriteLine(Environment.CurrentDirectory);
             MLContext mlContext = new MLContext(seed: 0);
-            var model = TrainNewModel(mlContext, _trainDataPath);           
+            var model = TrainNewModel(mlContext, _trainDataPath);
 
-            Evaluate(mlContext, model);
-            return TestSinglePrediction(mlContext, model, sample);
+            Evaluate(mlContext, model, whichModel);
+            return SinglePrediction(mlContext, model, sample);
+        }
+
+        public void EvaluateExistingModel(string modelPath, string whichModel)
+        {
+            MLContext mlContext = new MLContext();
+            DataViewSchema modelSchema;
+            ITransformer loadedModel = mlContext.Model.Load(modelPath, out modelSchema);
+            Console.WriteLine(Environment.CurrentDirectory);
+            Evaluate(mlContext, loadedModel, whichModel);
         }
 
         public static ITransformer TrainNewModel(MLContext mlContext, string dataPath)
@@ -55,23 +64,33 @@ namespace TaxiFarePrediction
             return model;
         }
 
-        private static void Evaluate(MLContext mlContext, ITransformer model)
+        private static void Evaluate(MLContext mlContext, ITransformer model, string whichModel)
         {
-            IDataView dataView = mlContext.Data.LoadFromTextFile<MetalViscosity>(_trainDataPath, hasHeader: false, separatorChar: ';');
+            var test = TestCases.AZ91;
+            switch (whichModel)
+            {
+                case "AZ91":
+                    test = TestCases.AZ91;
+                    break;
+                case "E21":
+                    test = TestCases.E21;
+                    break;
+                case "WE43B":
+                    test = TestCases.WE43B;
+                    break;
+            }
 
-            var predictions = model.Transform(dataView);
-            var metrics = mlContext.Regression.Evaluate(predictions, "Label", "Score");
 
-            Console.WriteLine();
-            Console.WriteLine($"*************************************************");
-            Console.WriteLine($"*       Model quality metrics evaluation         ");
-            Console.WriteLine($"*------------------------------------------------");
-            Console.WriteLine($"*       RSquared Score:      {metrics.RSquared:0.##}");
-            Console.WriteLine($"*       Root Mean Squared Error:      {metrics.RootMeanSquaredError:#.##}");
-            Console.WriteLine($"*************************************************");
+            var testHouseDataView = mlContext.Data.LoadFromEnumerable(test);
+            var testPriceDataView = model.Transform(testHouseDataView);
+
+            var metrics = mlContext.Regression.Evaluate(testPriceDataView, labelColumnName: "Label");
+
+            Console.WriteLine($"R^2: {metrics.RSquared:0.##}");
+            Console.WriteLine($"RMS error: {metrics.RootMeanSquaredError:0.##}");
         }
 
-        private static float TestSinglePrediction(MLContext mlContext, ITransformer model, MetalViscosity MetalViscositySample)
+        private static float SinglePrediction(MLContext mlContext, ITransformer model, MetalViscosity MetalViscositySample)
         {
             //Prediction test
             // Create prediction function and make prediction.

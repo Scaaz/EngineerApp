@@ -26,21 +26,23 @@ namespace EngineerApp.Controllers
         {
             MachineLearningMain ml = new MachineLearningMain();
             MetalViscosity sample = new MetalViscosity(data);
-            
-            switch(data.WhichModel)
+
+            switch (data.WhichModel)
             {
                 case "AZ91":
                     PredictedViscosity = ml.UseModel(sample, _AZ91Model);
+                    ml.EvaluateExistingModel(_AZ91Model, data.WhichModel);
                     break;
                 case "E21":
-                   PredictedViscosity = ml.UseModel(sample, _E21Model);
+                    PredictedViscosity = ml.UseModel(sample, _E21Model);
+                    ml.EvaluateExistingModel(_E21Model, data.WhichModel);
                     break;
                 case "WE43B":
                     PredictedViscosity = ml.UseModel(sample, _WE43BModel);
+                    ml.EvaluateExistingModel(_WE43BModel, data.WhichModel);
                     break;
             }
-
-           //PredictedViscosity = ml.MachineLearning(sample); //DO TRENOWANIA NOWYCH MODELI
+            //PredictedViscosity = ml.MachineLearning(sample); //DO TRENOWANIA NOWYCH MODELI
         }
 
         [HttpGet]
