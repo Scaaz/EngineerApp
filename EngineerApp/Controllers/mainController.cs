@@ -42,7 +42,7 @@ namespace EngineerApp.Controllers
                     ml.EvaluateExistingModel(_WE43BModel, data.WhichModel);
                     break;
             }
-            //PredictedViscosity = ml.MachineLearning(sample); //DO TRENOWANIA NOWYCH MODELI
+            //PredictedViscosity = ml.MachineLearning(sample, data.WhichModel); //DO TRENOWANIA NOWYCH MODELI
         }
 
         [HttpGet]

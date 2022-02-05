@@ -10,7 +10,10 @@ namespace TaxiFarePrediction
 {
     class MachineLearningMain
     {
-        static readonly string _trainDataPath = Path.Combine(Environment.CurrentDirectory, "Data", "WE43B.csv");
+        public static string GetTrainingData(string whichModel)
+        {
+            return Path.Combine(Environment.CurrentDirectory, "Data", whichModel + ".csv");
+        }
 
         public float UseModel(MetalViscosity sample, string modelPath)
         {
@@ -33,8 +36,7 @@ namespace TaxiFarePrediction
         {
             Console.WriteLine(Environment.CurrentDirectory);
             MLContext mlContext = new MLContext(seed: 0);
-            var model = TrainNewModel(mlContext, _trainDataPath);
-
+            var model = TrainNewModel(mlContext, whichModel);
             Evaluate(mlContext, model, whichModel);
             return SinglePrediction(mlContext, model, sample);
         }
@@ -48,8 +50,9 @@ namespace TaxiFarePrediction
             Evaluate(mlContext, loadedModel, whichModel);
         }
 
-        public static ITransformer TrainNewModel(MLContext mlContext, string dataPath)
+        public static ITransformer TrainNewModel(MLContext mlContext, string whichModel)
         {
+            string dataPath = GetTrainingData(whichModel);
             IDataView dataView = mlContext.Data.LoadFromTextFile<MetalViscosity>(dataPath, hasHeader: false, separatorChar: ';');
             var pipeline = mlContext.Transforms.CopyColumns(outputColumnName: "Label", inputColumnName: "Viscosity")
 
@@ -60,7 +63,7 @@ namespace TaxiFarePrediction
             var model = pipeline.Fit(dataView);
             Console.WriteLine("=============== End of training ===============");
             Console.WriteLine();
-            mlContext.Model.Save(model, dataView.Schema, "Data/WE43Bmodel.zip"); // SAVE MODEL
+            mlContext.Model.Save(model, dataView.Schema, "Data/" + whichModel + "model.zip"); // SAVE MODEL
             return model;
         }
 
