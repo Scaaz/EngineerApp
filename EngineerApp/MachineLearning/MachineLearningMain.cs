@@ -88,6 +88,7 @@ namespace TaxiFarePrediction
 
             Console.WriteLine($"R^2: {metrics.RSquared:0.##}");
             Console.WriteLine($"RMS error: {metrics.RootMeanSquaredError:0.##}");
+            Console.WriteLine($"MAE error: {metrics.MeanAbsoluteError:0.##}");
         }
 
         private static float SinglePrediction(MLContext mlContext, ITransformer model, MetalViscosity MetalViscositySample)
