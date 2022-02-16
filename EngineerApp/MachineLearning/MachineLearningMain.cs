@@ -83,7 +83,6 @@ namespace TaxiFarePrediction
                     break;
             }
 
-
             var testHouseDataView = mlContext.Data.LoadFromEnumerable(test);
             var testPriceDataView = model.Transform(testHouseDataView);
 
